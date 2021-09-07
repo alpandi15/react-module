@@ -1,10 +1,13 @@
-import { withRouter } from 'react-router'
-// import AuthLogin from '../pages/home'
-// import IndexPage from '../pages/index'
+import Header from '../components/layout/header'
 import Routes from './Routes'
 
 const App = () => {
-  return <Routes />
+  return (
+    <>
+      <Header />
+      <Routes />
+    </>
+  )
 };
 
-export default withRouter(App)
+export default App

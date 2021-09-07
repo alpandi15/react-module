@@ -5,6 +5,7 @@ const routes: any[] = [
   {
     path: '/home',
     component: home.Home,
+    exact: true,
     routes: [
       {
         path: '/home/profile',

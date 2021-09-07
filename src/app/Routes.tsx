@@ -1,33 +1,26 @@
 import { Route, Switch, useLocation } from 'react-router-dom'
 // import home from '../pages/home'
 import auth from '../pages/auth'
-import indexPage from '../pages'
+// import indexPage from '../pages'
+import home from '../pages/home'
+import profile from '../pages/profile'
 
 const routes: any[] = [
   {
     path: '/',
-    component: indexPage,
+    component: home.Home,
     exact: true
   },
   {
     path: '/auth/login',
     component: auth.Login,
     exact: true
+  },
+  {
+    path: '/profile',
+    component: profile.Profile
+    // exact: true
   }
-  // {
-  //   path: '/home',
-  //   component: home.Home,
-  //   routes: [
-  //     {
-  //       path: '/home/profile',
-  //       component: home.Home
-  //     },
-  //     {
-  //       path: '/home/settings',
-  //       component: home.Home
-  //     }
-  //   ]
-  // }
 ];
 
 function RouteWithSubRoutes (route: { component?: any; routes?: any; path?: any; }) {
