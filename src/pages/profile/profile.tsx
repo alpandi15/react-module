@@ -1,13 +1,5 @@
 import { Component } from 'react'
-import { Link, Route } from 'react-router-dom'
-
-const Users = () => {
-  return (
-    <div>
-      User Page
-    </div>
-  )
-}
+import { Link } from 'react-router-dom'
 
 export default class Profile extends Component {
   render () {
@@ -17,7 +9,6 @@ export default class Profile extends Component {
         <div>
           <Link to="/profile/user">User</Link>
         </div>
-        <Route path="/profile/user" component={Users} />
       </div>
     )
   }

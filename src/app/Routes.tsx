@@ -1,4 +1,6 @@
-import { Route, Switch, useLocation } from 'react-router-dom'
+import {
+  Route, Routes, BrowserRouter
+} from 'react-router-dom'
 // import home from '../pages/home'
 import auth from '../pages/auth'
 // import indexPage from '../pages'
@@ -6,7 +8,7 @@ import home from '../pages/home'
 import profile from '../pages/profile'
 import Layout from '../components/layout'
 
-const routes: any[] = [
+const appRoutes: any[] = [
   {
     path: '/',
     component: home.Home,
@@ -21,29 +23,37 @@ const routes: any[] = [
   {
     path: '/profile',
     component: profile.Profile,
-    layout: Layout
+    layout: Layout,
+    children: [
+      { path: '/user', component: profile.User }
+    ]
     // exact: true
   }
 ];
 
 function RouteWithSubRoutes (route: { component?: any; routes?: any; path?: any; layout: any}) {
-  const { path } = route
+  const {
+    path, layout, routes, ...props
+  } = route
+
+  const Element = () => {
+    // pass the sub-routes down to keep nesting
+    if (layout) {
+      return (
+        <route.layout>
+          <route.component {...props} routes={route.routes} />
+        </route.layout>
+      )
+    }
+    return (
+      <route.component {...props} routes={routes} />
+    )
+  }
+
   return (
     <Route
       path={path}
-      render={(props) => {
-        // pass the sub-routes down to keep nesting
-        if (route?.layout) {
-          return (
-            <route.layout>
-              <route.component {...props} routes={route.routes} />
-            </route.layout>
-          )
-        }
-        return (
-          <route.component {...props} routes={route.routes} />
-        )
-      }}
+      element={<Element />}
     />
   );
 }
@@ -56,18 +66,19 @@ const Page404 = () => {
   )
 }
 
-const Routes = () => {
-  const location = useLocation()
+const Routers = () => {
   return (
-    <Switch location={location}>
-      {
-        routes?.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))
-      }
-      <Route path="*" component={Page404} />
-    </Switch>
+    <BrowserRouter>
+      <Routes>
+        {
+          appRoutes?.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))
+        }
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-export default Routes
+export default Routers

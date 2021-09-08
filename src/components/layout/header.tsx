@@ -1,19 +1,34 @@
-import { useRouteMatch, Link } from 'react-router-dom'
+import {
+  // matchRoutes,
+  Link
+  // useLocation,
+  // useResolvedPath
+} from 'react-router-dom'
+// import classNames from 'classnames'
 
 interface LinkNavigateProps {
   label: string,
   to: string,
-  activeOnlyWhenExact?: boolean
+  // activeClassName: string,
+  inactiveClassName: string,
+  className: string
 }
 
-const LinkNavigate = ({ label, to, activeOnlyWhenExact }: LinkNavigateProps) => {
-  let match = useRouteMatch({
-    path: to,
-    exact: activeOnlyWhenExact
-  })
+const NavLink = ({
+  label, to, inactiveClassName, className
+}: LinkNavigateProps) => {
+  const getClassName = () => {
+    return className + inactiveClassName
+    // const match = matchRoutes({
+    //   path: to,
+    //   exact: activeOnlyWhenExact
+    // })
+
+    // if (match) return classNames()
+  }
 
   return (
-    <div className={`block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4 ${match ? 'text-white font-bold' : ''}`}>
+    <div className={getClassName()}>
       <Link to={to}>{label}</Link>
     </div>
   )
@@ -36,21 +51,25 @@ const Header = () => {
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden">
         <div className="text-sm lg:flex-grow">
-          <LinkNavigate to="/" label="Home" activeOnlyWhenExact />
-          <LinkNavigate to="/profile" label="Profile" />
-          {/* <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-            Docs
-          </a>
-          <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-            Examples
-          </a>
-          <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white">
-            Blog
-          </a> */}
+          <NavLink
+            to="/"
+            label="Home"
+            // activeClassName="border-indigo-500 text-gray-900"
+            inactiveClassName="text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5  transition duration-150 ease-in-out"
+          />
+          <NavLink to="/profile"
+            label="Profile"
+            inactiveClassName="text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5  transition duration-150 ease-in-out"
+          />
         </div>
         <div>
-          <LinkNavigate to="/auth/login" label="Login" />
-          {/* <a href="/#" className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal hover:bg-white mt-4 lg:mt-0">Download</a> */}
+          <NavLink to="/auth/login"
+            label="Login"
+            inactiveClassName="text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5  transition duration-150 ease-in-out"
+          />
         </div>
       </div>
     </nav>

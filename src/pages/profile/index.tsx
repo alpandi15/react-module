@@ -1,3 +1,4 @@
 import Profile from './profile'
+import User from './user'
 
-export default { Profile }
+export default { Profile, User }
